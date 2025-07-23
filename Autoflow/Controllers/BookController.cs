@@ -22,7 +22,7 @@ public class BookController(AutoflowDbContext context) : ControllerBase
             var books = getBooksTask.Result;
 
             // Filter my books based on the search criteria
-            // It should check the Name, Author and Language for any matches
+            // It should check the Name and Author for any matches
             // And then return them to the user
             var filteredBooks = new List<Book>();
             for (var i = 0; i < books.Count(); i++)
@@ -37,7 +37,7 @@ public class BookController(AutoflowDbContext context) : ControllerBase
                         {
                             Name = book.Name,
                             Author = book.Author,
-                            Language = book.Language,
+                            Rating = book.Rating,
                             Price = book.Price,
                         });
                     }
@@ -47,17 +47,7 @@ public class BookController(AutoflowDbContext context) : ControllerBase
                         {
                             Name = book.Name,
                             Author = book.Author,
-                            Language = book.Language,
-                            Price = book.Price,
-                        });
-                    }
-                    else if (book.Language.Contains(search))
-                    {
-                        filteredBooks.Add(new Book
-                        {
-                            Name = book.Name,
-                            Author = book.Author,
-                            Language = book.Language,
+                            Rating = book.Rating,
                             Price = book.Price,
                         });
                     }
@@ -100,6 +90,7 @@ public class BookController(AutoflowDbContext context) : ControllerBase
             Id = lastBook.Id + 1,
             Name = book.Name,
             Author = book.Name,
+            Rating = book.Rating,
             Price = book.Price,
         });
         context.SaveChangesAsync().Wait();
